@@ -29,8 +29,14 @@ export const RangeDayPanel = ({
   const { isJalaali, dayLabels, changePlaceholder, rangeState } =
     useRangepicker();
   const today = momentTransformer(moment(), isJalaali);
-  const { dayLabelRender, highlightDays, highlightWeekend, onClose, presets } =
-    useRangePanelContext();
+  const {
+    dayLabelRender,
+    highlightDays,
+    highlightWeekend,
+    onClose,
+    presets,
+    onDayClick,
+  } = useRangePanelContext();
 
   const extendDays = days.map((day) => {
     if (day.isDisabled) {
@@ -79,6 +85,18 @@ export const RangeDayPanel = ({
           } = day;
           return (
             <div
+              onClick={() => {
+                if (isDisabled) return; // Prevent clicking on disabled days
+
+                onSelect(day);
+
+                // Convert the date to a formatted string before calling `onDayClick`
+                const formattedDate = moment(
+                  dateTransformer(day, isJalaali),
+                ).format("YYYY-MM-DD");
+
+                onDayClick?.(formattedDate); // <-- Call `onDayClick` here with the formatted date
+              }}
               key={`${id}-${day.month}`}
               className={classNames("day-item-outer")}
               onMouseEnter={() => {
@@ -116,6 +134,7 @@ export const RangeDayPanel = ({
                   isNotCurrentMonth={isNotCurrentMonth}
                   onPress={() => {
                     onSelect(day);
+
                     if (
                       rangeState.endDate === null &&
                       rangeState.startDate.day !== 0

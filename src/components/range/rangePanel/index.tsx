@@ -16,6 +16,7 @@ interface RangePanelProps extends Props {
   shouldResponsive?: boolean;
   onClose?: () => void;
   presets?: boolean;
+  onDayClick?: (date: string) => void;
 }
 
 type RangePanelComponent = typeof RangePanel;
@@ -36,6 +37,7 @@ const RangePanel = (
     loading,
     loadingIndicator,
     presets,
+    onDayClick,
   }: RangePanelProps,
   ref: ForwardedRef<HTMLDivElement>,
 ) => {
@@ -92,6 +94,7 @@ const RangePanel = (
             onClose,
             shouldResponsive,
             presets,
+            onDayClick,
           }}
         >
           {responsive ? (

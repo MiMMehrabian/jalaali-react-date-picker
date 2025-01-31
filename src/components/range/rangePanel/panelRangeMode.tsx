@@ -5,11 +5,13 @@ interface RangePanelModeProps extends RangeProps {
   children: JSX.Element | JSX.Element[] | null;
   shouldResponsive?: boolean;
   presets?: boolean;
+  onDayClick?: (date: string) => void;
 }
 
 interface RangePanelModeContext extends RangePanelModeProps {
   onChangeMode?: (mode: Mode) => void;
   onClose?: () => void;
+  onDayClick?: (date: string) => void;
 }
 
 const RangePanelModeContext = createContext<
@@ -21,6 +23,7 @@ const RangePanelModeContext = createContext<
   onModeChange: () => null,
   dayLabelRender: () => null,
   onClose: () => null,
+  onDayClick: () => null,
   presets: true,
   shouldResponsive: false,
   highlightDays: undefined,
