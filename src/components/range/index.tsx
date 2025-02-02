@@ -6,7 +6,14 @@ import {
 } from "../../core";
 import RangePanel from "./rangePanel";
 
-export interface RangePickerProps extends Props {}
+export interface RangePickerProps extends Props {
+  /**
+   * The `onDayClick` method which will be executed when a day is clicked.
+   *
+   * @param `date`
+   */
+  onDayClick?: (date: string) => void; // <-- Add this
+}
 
 const RangePicker = forwardRef<HTMLDivElement, RangePickerProps>(
   (rangeProps, ref) => {
@@ -38,6 +45,7 @@ const RangePicker = forwardRef<HTMLDivElement, RangePickerProps>(
           style={style}
           className={className}
           loading={loading}
+          onDayClick={rangeProps.onDayClick}
         />
       </RangeProvider>
     );
